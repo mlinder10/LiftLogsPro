@@ -26,7 +26,7 @@ public final class Database {
   
   var db: OpaquePointer?
   
-  private init() {
+  public init() {
     self.db = nil
   }
   
@@ -297,8 +297,8 @@ public protocol Queryable: Codable {
 extension Queryable {
   static var cols: [String: String] { [:] }
   
-  public static func query(_ sql: String, _ args: [Arg] = []) throws -> [Self] {
-    let rows = try Database.shared.query(sql, args)
+  public static func query(_ sql: String, _ args: [Arg] = [], _ db: Database) throws -> [Self] {
+    let rows = try db.query(sql, args)
     return try Self.fromRows(rows)
   }
   
@@ -358,13 +358,13 @@ extension Array where Element: Insertable {
 extension Database {
   public func insert<T: Insertable>(_ object: T) throws -> Int {
     let (sql, args) = object.createSql()
-    return try Database.shared.execute(sql, args)
+    return try self.execute(sql, args)
   }
   
   public func insert<T: Insertable>(_ objects: [T]) throws -> Int {
     if objects.isEmpty { return 0 }
     let (sql, args) = objects.insert()
-    return try Database.shared.execute(sql, args)
+    return try self.execute(sql, args)
   }
 }
 
@@ -382,9 +382,11 @@ struct Statement {
 }
 
 public final class Transaction {
+  let db: Database
   var stmts: [Statement]
   
-  init() {
+  init(_ db: Database) {
+    self.db = db
     self.stmts = []
   }
   
@@ -413,25 +415,25 @@ public final class Transaction {
   
   public func run() throws -> [Any] {
     do {
-      let _ = try Database.shared.beginTransaction()
+      let _ = try self.db.beginTransaction()
       
       var results = [Any]()
       for stmt in self.stmts {
         switch stmt.type {
         case .execute:
-          let res = try Database.shared.execute(stmt.sql, stmt.args)
+          let res = try self.db.execute(stmt.sql, stmt.args)
           results.append(res)
         case .query:
-          let res = try Database.shared.query(stmt.sql, stmt.args)
+          let res = try self.db.query(stmt.sql, stmt.args)
           results.append(res)
         }
       }
       
-      let _ = try Database.shared.commit()
+      let _ = try self.db.commit()
       
       return results
     } catch {
-      let _ = try Database.shared.rollback()
+      let _ = try self.db.rollback()
       throw error
     }
   }
@@ -439,19 +441,19 @@ public final class Transaction {
 
 extension Database {
   public func beginTransaction() throws -> Int {
-    return try Database.shared.execute("BEGIN TRANSACTION")
+    return try self.execute("BEGIN TRANSACTION")
   }
   
   public func commit() throws -> Int {
-    return try Database.shared.execute("COMMIT")
+    return try self.execute("COMMIT")
   }
   
   public func rollback() throws -> Int {
-    return try Database.shared.execute("ROLLBACK")
+    return try self.execute("ROLLBACK")
   }
   
   public func transaction() -> Transaction {
-    return Transaction()
+    return Transaction(self)
   }
 }
 

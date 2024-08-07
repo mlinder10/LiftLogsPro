@@ -1,6 +1,6 @@
 import Foundation
 
-struct ListExercise {
+struct ListExercise: Insertable {
     private static let exercises: [Self]? = nil
 
     let id: String
@@ -18,6 +18,31 @@ struct ListExercise {
     let secondaryGroups: [String]?
     let repsLow: Int?
     let repsHigh: Int?
+
+    static var table: String { "list_exercises" }
+    var inserts: [String: Arg] {
+        let directions = try? JSONEncoder().encode(self.directions)
+        let cues = try? JSONEncoder().encode(self.cues)
+        let secondaryGroups = try? JSONEncoder().encode(self.secondaryGroups)
+        [
+        "id": .string(id),
+        "name": .string(name),
+        "primary_muscle_group": .string(primaryGroup),
+        "body_part": .string(bodyPart),
+        "exercise_type": .string(exerciseType),
+        "equipment_type": .string(equipmentType),
+        "description": .string(description),
+        "directions": .blob(directions),
+        "cues": .blob(cues),
+        "img_contracted": .string(imgContracted),
+        "img_extended": .string(imgExtended),
+        "video_id": .string(videoId),
+        "secondary_muscle_groups": .blob(secondaryGroups),
+        "reps_low": .int(repsLow),
+        "reps_high": .int(repsHigh),
+        ]
+    }
+
 
     // SHARING =================================================================
     func compress() -> String {
@@ -73,21 +98,21 @@ struct ListExercise {
     // CLIENT FUNCTIONS ========================================================
     static func all() -> [ListExercise] {
         if let exercises = Self.exercises { return exercises }
-        let rows = try! Database.shared.query("SELECT * FROM list_exercises")
+        let rows = try! Connection.client.query("SELECT * FROM list_exercises")
         self.exercises = rows.map { ListExercise.fromRow($0) }
         return self.exercises!
     }
 
     static func get(id: String) -> ListExercise? {
         if let exercises = Self.exercises { return exercises.first(where: { $0.id == id }) }
-        let rows = Database.shared.query("SELECT * FROM list_exercises WHERE id = ?", [.string(id)])
+        let rows = Connection.client.query("SELECT * FROM list_exercises WHERE id = ?", [.string(id)])
         return fromRow(rows).first
     }
 
     static func create(name: String, bodyPart: String, primaryGroup: String, exerciseType: String, equipmentType: String) -> String {
         let id = UUID().uuidString
 
-        let _ = try? Database.shared.execute(
+        let _ = try? Connection.client.execute(
             """
                 INSERT INTO list_exercises
                   (id, name, body_part, primary_muscle_group, exercise_type, equipment_type)
