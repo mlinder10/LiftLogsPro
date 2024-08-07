@@ -1,0 +1,48 @@
+/*
+NOTES:
+ - sqlite does not have TIMESTAMP or DATETIME types so we use BIGINT for timestamps
+*/
+
+CREATE TABLE IF NOT EXISTS plans (
+  id TEXT PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  description TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS workouts (
+  id TEXT PRIMARY KEY NOT NULL,
+  sequence INTEGER NOT NULL,
+  name TEXT NOT NULL,
+  description TEXT NOT NULL,
+  color_one TEXT NOT NULL,
+  color_two TEXT NOT NULL,
+  plan_id TEXT,
+  FOREIGN KEY (plan_id) REFERENCES plans(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS wrappers (
+  id TEXT PRIMARY KEY NOT NULL,
+  sequence INTEGER NOT NULL,
+  stimulus INTEGER NOT NULL,
+  fatigue INTEGER NOT NULL,
+  workout_id TEXT NOT NULL,
+  FOREIGN KEY (workout_id) REFERENCES completed_workouts(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS exercises (
+  id TEXT PRIMARY KEY NOT NULL,
+  list_id TEXT NOT NULL,
+  sequence INT NOT NULL,
+  wrapper_id TEXT NOT NULL,
+  FOREIGN KEY (exercise_id) REFERENCES exercise_wrappers(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS sets (
+  id TEXT PRIMARY KEY NOT NULL,
+  sequence INTEGER NOT NULL,
+  type TEXT NOT NULL,
+  reps INTEGER NOT NULL,
+  weight FLOAT NOT NULL,
+  exercise_id TEXT NOT NULL,
+  FOREIGN KEY (exercise_id) REFERENCES exercises(id) ON DELETE CASCADE
+);

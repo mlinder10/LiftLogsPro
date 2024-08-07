@@ -11,6 +11,10 @@
 		14AEB51D2C61A1C4007CF9DD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB51C2C61A1C4007CF9DD /* ContentView.swift */; };
 		14AEB51F2C61A1C6007CF9DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14AEB51E2C61A1C6007CF9DD /* Assets.xcassets */; };
 		14AEB5222C61A1C6007CF9DD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14AEB5212C61A1C6007CF9DD /* Preview Assets.xcassets */; };
+		14AEB5302C61A536007CF9DD /* Sqlite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB52F2C61A536007CF9DD /* Sqlite.swift */; };
+		14AEB5332C61AAC6007CF9DD /* tables.sql in Resources */ = {isa = PBXBuildFile; fileRef = 14AEB5322C61AAC6007CF9DD /* tables.sql */; };
+		14AEB5362C61AE22007CF9DD /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AEB5352C61AE21007CF9DD /* Client.swift */; };
+		14D4418A2C63289E0094C67E /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D441892C63289E0094C67E /* Database.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +23,10 @@
 		14AEB51C2C61A1C4007CF9DD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		14AEB51E2C61A1C6007CF9DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		14AEB5212C61A1C6007CF9DD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		14AEB52F2C61A536007CF9DD /* Sqlite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sqlite.swift; sourceTree = "<group>"; };
+		14AEB5322C61AAC6007CF9DD /* tables.sql */ = {isa = PBXFileReference; lastKnownFileType = text; path = tables.sql; sourceTree = "<group>"; };
+		14AEB5352C61AE21007CF9DD /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
+		14D441892C63289E0094C67E /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +59,9 @@
 		14AEB5192C61A1C4007CF9DD /* Weights */ = {
 			isa = PBXGroup;
 			children = (
+				14AEB5312C61AAB1007CF9DD /* Migrations */,
+				14D441882C6325990094C67E /* Managers */,
+				14AEB5342C61AE16007CF9DD /* Models */,
 				14AEB51A2C61A1C4007CF9DD /* WeightsApp.swift */,
 				14AEB51C2C61A1C4007CF9DD /* ContentView.swift */,
 				14AEB51E2C61A1C6007CF9DD /* Assets.xcassets */,
@@ -65,6 +76,31 @@
 				14AEB5212C61A1C6007CF9DD /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		14AEB5312C61AAB1007CF9DD /* Migrations */ = {
+			isa = PBXGroup;
+			children = (
+				14AEB5322C61AAC6007CF9DD /* tables.sql */,
+			);
+			path = Migrations;
+			sourceTree = "<group>";
+		};
+		14AEB5342C61AE16007CF9DD /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				14AEB5352C61AE21007CF9DD /* Client.swift */,
+				14D441892C63289E0094C67E /* Database.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		14D441882C6325990094C67E /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				14AEB52F2C61A536007CF9DD /* Sqlite.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +119,8 @@
 			dependencies = (
 			);
 			name = Weights;
+			packageProductDependencies = (
+			);
 			productName = Weights;
 			productReference = 14AEB5172C61A1C4007CF9DD /* Weights.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +149,9 @@
 				Base,
 			);
 			mainGroup = 14AEB50E2C61A1C4007CF9DD;
+			packageReferences = (
+				14AEB52A2C61A4D5007CF9DD /* XCRemoteSwiftPackageReference "SQLite" */,
+			);
 			productRefGroup = 14AEB5182C61A1C4007CF9DD /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -127,6 +168,7 @@
 			files = (
 				14AEB5222C61A1C6007CF9DD /* Preview Assets.xcassets in Resources */,
 				14AEB51F2C61A1C6007CF9DD /* Assets.xcassets in Resources */,
+				14AEB5332C61AAC6007CF9DD /* tables.sql in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,7 +179,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14AEB5362C61AE22007CF9DD /* Client.swift in Sources */,
+				14AEB5302C61A536007CF9DD /* Sqlite.swift in Sources */,
 				14AEB51D2C61A1C4007CF9DD /* ContentView.swift in Sources */,
+				14D4418A2C63289E0094C67E /* Database.swift in Sources */,
 				14AEB51B2C61A1C4007CF9DD /* WeightsApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -287,6 +332,10 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mattlinder.Weights;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -316,6 +365,10 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mattlinder.Weights;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -344,6 +397,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		14AEB52A2C61A4D5007CF9DD /* XCRemoteSwiftPackageReference "SQLite" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stephencelis/SQLite.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.15.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = 14AEB50F2C61A1C4007CF9DD /* Project object */;
 }
