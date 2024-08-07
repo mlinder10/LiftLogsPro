@@ -1,6 +1,6 @@
 import Foundation
 
-private let EXERCISE_LIST_URL = "https://liftlogs.vercel.app/api/exercises.json"
+private let EXERCISE_LIST_URL = "https://liftlogs.vercel.app/exercises.json"
 
 enum NetworkError {
     case invalidUrl
@@ -121,7 +121,7 @@ enum Connection {
         )
     }
 
-    static func initExercises() async throws {
+    static func updateExerciseList() async throws {
         guard let url = URL(string: EXERCISE_LIST_URL) else {
             throw NetworkError.invalidUrl
         }
@@ -134,9 +134,7 @@ enum Connection {
         let addTo = remoteExercises.filter({ !localExercises.contains($0) })
         let removeFrom = localExercises.filter({ !remoteExercises.contains($0) })
 
-        if addTo.count > 0 {
-            try Connection.client.insert(addTo)
-        }
+        if addTo.count > 0 { try Connection.client.insert(addTo) }
 
         let args = removeFrom.map({ Arg.string($0.id) })
 

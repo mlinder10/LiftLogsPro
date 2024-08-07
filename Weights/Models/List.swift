@@ -1,6 +1,6 @@
 import Foundation
 
-struct ListExercise: Insertable {
+struct ListExercise: Insertable, Codable {
     private static let exercises: [Self]? = nil
 
     let id: String

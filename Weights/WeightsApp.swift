@@ -13,7 +13,7 @@ struct WeightsApp: App {
     do {
       try connect()
       try createTables()
-      Task { try await initExercises() }
+      Task { try await updateExerciseList() }
     } catch {
       print("Fail")
       return
