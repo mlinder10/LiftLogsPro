@@ -94,9 +94,9 @@ enum DB {
       "sequence": .int(index),
       "color_one": .string(colorOne),
       "color_two": .string(colorTwo),
-      "start": start == nil ? .null : .int(start!),
-      "end": end == nil ? .null : .int(end!),
-      "plan_id": planId == nil ? .null : .string(planId!),
+      "start": .int(start),
+      "end": .int(end),
+      "plan_id": .string(planId),
     ]}
   }
   

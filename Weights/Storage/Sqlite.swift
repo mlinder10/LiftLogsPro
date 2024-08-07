@@ -14,10 +14,10 @@ public enum DBError: Error {
 }
 
 public enum Arg {
-  case string(String)
-  case int(any BinaryInteger)
-  case float(any BinaryFloatingPoint)
-  case blob(Data)
+  case string(String?)
+  case int((any BinaryInteger)?)
+  case float((any BinaryFloatingPoint)?)
+  case blob(Data?)
   case null
 }
 
@@ -72,12 +72,28 @@ public final class Database {
       let bindIndex = Int32(i + 1)
       switch arg {
       case .string(let value):
+        guard let value else {
+          flag = sqlite3_bind_null(stmt, bindIndex)
+          continue
+        }
         flag = sqlite3_bind_text(stmt, bindIndex, NSString(string: value).utf8String, -1, SQLITE_TRANSIENT)
       case .int(let value):
+        guard let value else {
+          flag = sqlite3_bind_null(stmt, bindIndex)
+          continue
+        }
         flag = sqlite3_bind_int(stmt, bindIndex, CInt(value))
       case .float(let value):
+        guard let value else {
+          flag = sqlite3_bind_null(stmt, bindIndex)
+          continue
+        }
         flag = sqlite3_bind_double(stmt, bindIndex, CDouble(value))
       case .blob(let value):
+        guard let value else {
+          flag = sqlite3_bind_null(stmt, bindIndex)
+          continue
+        }
         let nsdata = NSData(data: value)
         flag = sqlite3_bind_blob(stmt, bindIndex, nsdata.bytes, CInt(nsdata.length), SQLITE_TRANSIENT)
       case .null:

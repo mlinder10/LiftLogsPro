@@ -14,6 +14,7 @@ enum Client {
     var description: String
     var workouts: [Workout]
     
+    // INIT
     init() {
       self.id = UUID().uuidString
       self.name = "New Plan"
@@ -40,6 +41,7 @@ enum Client {
     var end: Int64?
     var wrappers: [Wrapper]
     
+    // INIT
     init(index: Int = 0) {
       self.id = UUID().uuidString
       self.name = "New Workout"
@@ -72,6 +74,7 @@ enum Client {
     var fatigue: Int
     var exercises: [Exercise]
     
+    // INIT
     init(index: Int) {
       self.id = UUID().uuidString
       self.index = index
@@ -95,6 +98,7 @@ enum Client {
     var index: Int
     var sets: [ExerciseSet]
     
+    // INIT
     init(listId: String, index: Int) {
       self.id = UUID().uuidString
       self.listId = listId
@@ -117,6 +121,7 @@ enum Client {
     var reps: Int
     var weight: Double
     
+    // INIT
     init(index: Int) {
       self.id = UUID().uuidString
       self.index = index

@@ -46,3 +46,21 @@ CREATE TABLE IF NOT EXISTS sets (
   exercise_id TEXT NOT NULL,
   FOREIGN KEY (exercise_id) REFERENCES exercises(id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS list_exercises (
+  id TEXT PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  body_part TEXT NOT NULL,
+  primary_muscle_group TEXT NOT NULL,
+  exercise_type TEXT NOT NULL,
+  equipment_type TEXT NOT NULL,
+  description TEXT,
+  directions BLOB,
+  cues BLOB,
+  image_contracted TEXT,
+  image_extended TEXT,
+  video_id TEXT,
+  secondary_muscle_groups BLOB,
+  reps_low INTEGER,
+  reps_high INTEGER
+)
